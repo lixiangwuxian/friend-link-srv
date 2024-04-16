@@ -1,0 +1,12 @@
+#rename this file to conf.yaml
+email:
+  server: "smtp-mail.server.com"
+  port: 587
+  account: "noreply@server.com"
+  password: "p@ssw0rd"
+  admin_email: "example@server.com"
+secret: 
+  key: "your_admin_secret_key"  
+domain:
+  host: "www.your_domain.com"
+  api: "api.your_domain.com"
