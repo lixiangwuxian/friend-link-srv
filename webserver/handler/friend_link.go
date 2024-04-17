@@ -36,7 +36,6 @@ func ApplicateFriendLink(c *gin.Context) {
 	}
 	if err != nil {
 		logger.Error("Error creating application: ", err.Error())
-		// w.WriteHeader(http.StatusInternalServerError)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

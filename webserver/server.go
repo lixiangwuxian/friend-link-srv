@@ -11,10 +11,10 @@ func router(engine *gin.Engine) {
 	usr.Use(middleware.CorsMiddleware())
 	usr.Use(middleware.RateLimitMiddleware())
 	{
-		usr.GET("/friend/approve", handler.ApproveFriendLink)
-		usr.POST("/friend/application", handler.ApplicateFriendLink)
-		usr.GET("/friend/reject", handler.RejectFriendLink)
-		usr.GET("/friend/list", handler.GetFriendList)
+		usr.GET("/friend/approve.php", handler.ApproveFriendLink)
+		usr.POST("/friend/application.php", handler.ApplicateFriendLink)
+		usr.GET("/friend/reject.php", handler.RejectFriendLink)
+		usr.GET("/friend/list.json", handler.GetFriendList)
 	}
 
 	admin := engine.Group("/admin")

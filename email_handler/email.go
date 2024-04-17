@@ -2,6 +2,7 @@ package emailhandler
 
 import (
 	"fmt"
+	"sync"
 
 	"gopkg.in/gomail.v2"
 	"lxtend.com/friend_link/config"
@@ -9,6 +10,8 @@ import (
 )
 
 var e EmailHandler
+
+var mailMutex = sync.Mutex{}
 
 type EmailHandler struct {
 	server string
@@ -52,6 +55,8 @@ func (e *EmailHandler) SendApplicationRejected(peer_mail string) error {
 }
 
 func (e *EmailHandler) MailTo(to string, subject string, content string) error {
+	mailMutex.Lock()
+	defer mailMutex.Unlock()
 	if !isValidEmail(to) {
 		logger.Error("invalid email address:", to)
 		return fmt.Errorf("invalid email address: %s", to)
@@ -67,5 +72,10 @@ func (e *EmailHandler) MailTo(to string, subject string, content string) error {
 	d := gomail.NewDialer(e.server, e.port, e.user, e.passwd)
 
 	// Send the email
-	return d.DialAndSend(m)
+	// return d.DialAndSend(m)
+	if err := d.DialAndSend(m); err != nil {
+		logger.Error(err)
+		return err
+	}
+	return nil
 }
